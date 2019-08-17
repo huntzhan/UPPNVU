@@ -1,0 +1,11 @@
+  version: 2.1
+  jobs:
+    pytorch-transformer:
+      working_directory: ~/pytorch-transformer
+      docker:
+        - image: circleci/python:3.6
+      steps:
+        - git clone https://github.com/huggingface/pytorch-transformers.git
+        - sed -i 's/name="pytorch_transformers"/name="pytorch_transformers_nightly_unofficial"/g' setup.py
+        - sed -i -r 's/version="(.+?)"/version="\1.dev'`date -u "+%Y%m%d%H%M"`'"/g' setup.py
+        - python setup.py sdist bdist_wheel
