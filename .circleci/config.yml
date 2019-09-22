@@ -25,6 +25,8 @@ jobs:
       - run: |
           sed -i "s/name='allennlp'/name='allennlp_pvt_nightly'/g" setup.py
           sed -i -r 's/version=(.+?),/version=\1.split("-")[0] + ".dev'`date -u "+%Y%m%d%H%M"`'",/g' setup.py
+          sed -i "s/pytorch-transformers==1.1.0/pytorch-transformers>=1.1.0/g" requirements.txt
+          sed -i "s/pytorch-transformers==1.1.0/pytorch-transformers>=1.1.0/g" setup.py
       - run: |
           pip install --user -U pip wheel twine
           python setup.py sdist bdist_wheel
